@@ -1,6 +1,15 @@
 #!/usr/bin/env php
 <?php
 
+// --- AUTO-FIX FOR PHP VERSION ---
+if (PHP_VERSION_ID < 80100 && file_exists(__DIR__ . '/php_env/php.exe')) {
+    $cmd = '"' . __DIR__ . '/php_env/php.exe" "' . __FILE__ . '" ' . implode(' ', array_slice($argv, 1));
+    passthru($cmd, $exitCode);
+    exit($exitCode);
+}
+// --------------------------------
+
+
 define('LARAVEL_START', microtime(true));
 
 /*
