@@ -15,6 +15,12 @@
         @theme {
             --color-primary: #6366f1;
             --color-primary-hover: #4f46e5;
+            --color-primary-soft: #e0e7ff;
+            --color-secondary: #ec4899; 
+            --color-bg: #ffffff;
+            --color-card: #fdfdff;
+            --color-border: #e5e7eb;
+            --color-text: #1e293b;
         }
         body {
             @apply font-['Inter'] bg-[#0f172a] text-slate-50 min-h-screen flex flex-col;
