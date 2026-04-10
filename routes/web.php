@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ProductController;
+use App\Http\Controllers\CategoryController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -16,7 +18,19 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
-})->middleware('auth');
+});
+
+// Public Routes
+Route::get('/products', [ProductController::class, 'index'])->name('products.index');
+Route::get('/products/{product}', [ProductController::class, 'show'])->name('products.show');
+Route::get('/categories', [CategoryController::class, 'index'])->name('categories.index');
+Route::get('/categories/{category}', [CategoryController::class, 'show'])->name('categories.show');
+
+// Admin Routes
+Route::middleware(['auth', 'role:admin'])->group(function () {
+    Route::resource('admin/products', ProductController::class)->except(['index', 'show']);
+    Route::resource('admin/categories', CategoryController::class)->except(['index', 'show']);
+});
 
 // Auth Routes
 Route::middleware('guest')->group(function () {
