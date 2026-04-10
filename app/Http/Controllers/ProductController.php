@@ -104,9 +104,9 @@ class ProductController extends Controller
     public function destroy(Product $product)
     {
         // Optional: Delete photo from storage if exists
-        // if ($product->photo && file_exists(public_path($product->photo))) {
-        //     unlink(public_path($product->photo));
-        // }
+        if ($product->photo && file_exists(public_path($product->photo))) {
+            unlink(public_path($product->photo));
+        }
         
         $product->delete();
 

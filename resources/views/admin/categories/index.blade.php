@@ -37,7 +37,7 @@
         <p class="text-text/60 text-sm mb-6 line-clamp-2 h-10">{{ $category->description ?? 'No description provided.' }}</p>
         <div class="flex items-center justify-between py-4 border-t border-border mt-auto">
             <span class="text-xs font-bold text-text/40 uppercase">{{ $category->products_count ?? 0 }} Products</span>
-            <a href="#" class="text-sm font-bold text-primary hover:underline transition-all">Browse →</a>
+            <a href="{{ route('admin.categories.show', $category) }}" class="text-sm font-bold text-primary hover:underline transition-all">Browse →</a>
         </div>
     </div>
     @endforeach

@@ -60,7 +60,8 @@ class CategoryController extends Controller
      */
     public function show(Category $category)
     {
-        return view('admin.categories.show', compact('category'));
+        $products = $category->products()->latest()->paginate(12);
+        return view('admin.categories.show', compact('category', 'products'));
     }
 
     /**
