@@ -127,4 +127,34 @@ class AuthController extends Controller
 
         return redirect('/login')->with('success', 'You have been logged out.');
     }
+
+    public function showAdminLogin()
+    {
+        return view('admin.login');
+    }
+
+    public function adminLogin(Request $request)
+    {
+        $fields = $request->validate([
+            'email' => 'required|string|email',
+            'password' => 'required|string'
+        ]);
+
+        if (Auth::attempt($fields)) {
+            $user = Auth::user();
+
+            if ($user->isAdmin()) {
+                $request->session()->regenerate();
+                return redirect('/admin/dashboard')->with('success', 'Admin login successful!');
+            }
+
+            // If not admin, logout and redirect to user login
+            Auth::logout();
+            return redirect('/login')->withErrors(['email' => 'Access denied. You are not an admin.']);
+        }
+
+        return back()->withErrors([
+            'email' => 'The provided credentials do not match our records.',
+        ])->onlyInput('email');
+    }
 }

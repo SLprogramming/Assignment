@@ -1,0 +1,117 @@
+@extends('layouts.admin')
+
+@section('admin-content')
+<div class="max-w-4xl mx-auto">
+    <header class="mb-8">
+        <a href="{{ route('admin.products.index') }}" class="text-sm font-bold text-primary hover:underline flex items-center gap-2 mb-4">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
+            Back to Inventory
+        </a>
+        <h1 class="text-3xl font-bold tracking-tight text-text">Add New Product</h1>
+        <p class="text-text/60">Launch a new item into your premium collection.</p>
+    </header>
+
+    @if ($errors->any())
+        <div class="mb-6 p-4 bg-red-50 dark:bg-red-500/10 border-l-4 border-red-500 text-red-700 dark:text-red-400 text-sm rounded-lg">
+            <ul class="list-disc list-inside">
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
+
+    <form action="{{ route('admin.products.store') }}" method="POST" enctype="multipart/form-data" class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        @csrf
+        <!-- Left: Main Info -->
+        <div class="lg:col-span-2 space-y-6">
+            <div class="bg-card border border-border rounded-3xl p-8 shadow-xl shadow-primary/5">
+                <div class="space-y-6">
+                    <div>
+                        <label class="block text-xs font-black text-text/40 uppercase tracking-widest mb-2">Product Name</label>
+                        <input type="text" name="name" value="{{ old('name') }}" placeholder="e.g. Minimalist Leather Watch" 
+                            class="w-full bg-bg border border-border px-5 py-4 rounded-2xl text-text placeholder-text/20 focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all font-medium" required>
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-6">
+                        <div>
+                            <label class="block text-xs font-black text-text/40 uppercase tracking-widest mb-2">Price ($)</label>
+                            <input type="number" name="price" value="{{ old('price') }}" step="0.01" placeholder="0.00" 
+                                class="w-full bg-bg border border-border px-5 py-4 rounded-2xl text-text placeholder-text/20 focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all font-medium" required>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-black text-text/40 uppercase tracking-widest mb-2">Initial Stock</label>
+                            <input type="number" name="stock_qty" value="{{ old('stock_qty', 0) }}" placeholder="0" 
+                                class="w-full bg-bg border border-border px-5 py-4 rounded-2xl text-text placeholder-text/20 focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all font-medium" required>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Category Selection -->
+            <div class="bg-card border border-border rounded-3xl p-8 shadow-xl shadow-primary/5">
+                <label class="block text-xs font-black text-text/40 uppercase tracking-widest mb-4">Assign Categories</label>
+                <div class="grid grid-cols-2 md:grid-cols-3 gap-3">
+                    @foreach($categories as $category)
+                    <label class="relative group cursor-pointer">
+                        <input type="checkbox" name="categories[]" value="{{ $category->id }}" class="peer hidden" 
+                            {{ is_array(old('categories')) && in_array($category->id, old('categories')) ? 'checked' : '' }}>
+                        <div class="px-4 py-3 bg-bg border border-border rounded-xl text-center transition-all peer-checked:bg-primary/10 peer-checked:border-primary peer-checked:text-primary group-hover:border-primary/30">
+                            <span class="text-xs font-bold tracking-tight">{{ $category->name }}</span>
+                        </div>
+                    </label>
+                    @endforeach
+                </div>
+                @if($categories->isEmpty())
+                    <p class="text-xs text-text/40 italic">No categories found. <a href="{{ route('admin.categories.create') }}" class="text-primary hover:underline">Create one first.</a></p>
+                @endif
+            </div>
+        </div>
+
+        <!-- Right: Photo Upload -->
+        <div class="space-y-6">
+            <div class="bg-card border border-border rounded-3xl p-8 shadow-xl shadow-primary/5">
+                <label class="block text-xs font-black text-text/40 uppercase tracking-widest mb-4 text-center">Product Photo</label>
+                
+                <div class="relative group w-full aspect-square bg-bg border-2 border-dashed border-border rounded-2xl overflow-hidden flex flex-col items-center justify-center hover:border-primary/50 transition-all">
+                    <input type="file" name="photo" id="photo-input" class="absolute inset-0 opacity-0 cursor-pointer z-10" onchange="previewImage(this)">
+                    
+                    <img id="preview-img" src="" class="absolute inset-0 w-full h-full object-cover hidden">
+                    
+                    <div id="upload-placeholder" class="text-center">
+                        <svg class="w-10 h-10 text-text/10 mb-2 mx-auto group-hover:text-primary/30 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 00-2 2z"></path></svg>
+                        <p class="text-[10px] font-black uppercase text-text/30 group-hover:text-primary transition-colors">Click to Upload</p>
+                    </div>
+                </div>
+                <p class="mt-4 text-[10px] text-text/40 text-center uppercase tracking-widest">JPG, PNG (Max 2MB)</p>
+            </div>
+
+            <button type="submit" class="w-full bg-primary text-white font-bold py-5 rounded-2xl shadow-xl shadow-primary/20 hover:bg-primary-hover hover:-translate-y-0.5 transition-all">
+                Publish Product
+            </button>
+            <a href="{{ route('admin.products.index') }}" class="block w-full text-center py-4 bg-bg border border-border text-text font-bold rounded-2xl hover:bg-card transition-all">
+                Cancel
+            </a>
+        </div>
+    </form>
+</div>
+@endsection
+
+@push('scripts')
+<script>
+    function previewImage(input) {
+        const preview = document.getElementById('preview-img');
+        const placeholder = document.getElementById('upload-placeholder');
+        
+        if (input.files && input.files[0]) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                preview.src = e.target.result;
+                preview.classList.remove('hidden');
+                placeholder.classList.add('opacity-0');
+            }
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+</script>
+@endpush

@@ -15,7 +15,16 @@ class ProductController extends Controller
     public function index()
     {
         $products = Product::with('categories')->latest()->get();
-        return response()->json($products);
+        return view('admin.products.index', compact('products'));
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     */
+    public function create()
+    {
+        $categories = Category::all();
+        return view('admin.products.create', compact('categories'));
     }
 
     /**
@@ -23,33 +32,38 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        $data = $request->validate([
+        $request->validate([
             'name' => 'required|string|max:255',
             'price' => 'required|numeric|min:0',
             'stock_qty' => 'required|integer|min:0',
             'photo' => 'nullable|image|max:2048',
-            'categories' => 'required|array',
+            'categories' => 'nullable|array',
+            'categories.*' => 'exists:categories,id'
         ]);
 
+        $productData = $request->only(['name', 'price', 'stock_qty']);
+
         if ($request->hasFile('photo')) {
-            $data['photo'] = $request->file('photo')->store('products', 'public');
+            $path = $request->file('photo')->store('products', 'public');
+            $productData['photo'] = "storage/" . $path;
         }
 
-        $product = Product::create($data);
-        $product->categories()->sync($request->categories);
+        $product = Product::create($productData);
 
-        return response()->json([
-            'message' => 'Product created successfully',
-            'product' => $product->load('categories')
-        ], 201);
+        if ($request->categories) {
+            $product->categories()->attach($request->categories);
+        }
+
+        return redirect()->route('admin.products.index')->with('success', 'Product created successfully!');
     }
 
     /**
-     * Display the specified resource.
+     * Show the form for editing the specified resource.
      */
-    public function show(Product $product)
+    public function edit(Product $product)
     {
-        return response()->json($product->load('categories'));
+        $categories = Category::all();
+        return view('admin.products.edit', compact('product', 'categories'));
     }
 
     /**
@@ -57,28 +71,31 @@ class ProductController extends Controller
      */
     public function update(Request $request, Product $product)
     {
-        $data = $request->validate([
+        $request->validate([
             'name' => 'required|string|max:255',
             'price' => 'required|numeric|min:0',
             'stock_qty' => 'required|integer|min:0',
             'photo' => 'nullable|image|max:2048',
-            'categories' => 'required|array',
+            'categories' => 'nullable|array',
+            'categories.*' => 'exists:categories,id'
         ]);
+
+        $productData = $request->only(['name', 'price', 'stock_qty']);
 
         if ($request->hasFile('photo')) {
-            if ($product->photo) {
-                Storage::disk('public')->delete($product->photo);
-            }
-            $data['photo'] = $request->file('photo')->store('products', 'public');
+            $path = $request->file('photo')->store('products', 'public');
+            $productData['photo'] = "storage/" . $path;
         }
 
-        $product->update($data);
-        $product->categories()->sync($request->categories);
+        $product->update($productData);
 
-        return response()->json([
-            'message' => 'Product updated successfully',
-            'product' => $product->load('categories')
-        ]);
+        if ($request->categories) {
+            $product->categories()->sync($request->categories);
+        } else {
+            $product->categories()->detach();
+        }
+
+        return redirect()->route('admin.products.index')->with('success', 'Product updated successfully!');
     }
 
     /**
@@ -86,11 +103,13 @@ class ProductController extends Controller
      */
     public function destroy(Product $product)
     {
-        if ($product->photo) {
-            Storage::disk('public')->delete($product->photo);
-        }
+        // Optional: Delete photo from storage if exists
+        // if ($product->photo && file_exists(public_path($product->photo))) {
+        //     unlink(public_path($product->photo));
+        // }
+        
         $product->delete();
 
-        return response()->json(['message' => 'Product deleted successfully']);
+        return redirect()->route('admin.products.index')->with('success', 'Product deleted permanently!');
     }
 }

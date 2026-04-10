@@ -14,7 +14,15 @@ class CategoryController extends Controller
     public function index()
     {
         $categories = Category::withCount('products')->get();
-        return response()->json($categories);
+        return view('admin.categories.index', compact('categories'));
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     */
+    public function create()
+    {
+        return view('admin.categories.create');
     }
 
     /**
@@ -24,19 +32,27 @@ class CategoryController extends Controller
     {
         $request->validate([
             'name' => 'required|string|max:255|unique:categories',
+            'slug' => 'nullable|string|max:255|unique:categories',
             'description' => 'nullable|string',
         ]);
 
-        $category = Category::create([
+        $slug = $request->slug ?: Str::slug($request->name);
+
+        Category::create([
             'name' => $request->name,
-            'slug' => Str::slug($request->name),
+            'slug' => $slug,
             'description' => $request->description,
         ]);
 
-        return response()->json([
-            'message' => 'Category created successfully',
-            'category' => $category
-        ], 201);
+        return redirect('/admin/categories')->with('success', 'Category created successfully!');
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     */
+    public function edit(Category $category)
+    {
+        return view('admin.categories.edit', compact('category'));
     }
 
     /**
@@ -44,10 +60,7 @@ class CategoryController extends Controller
      */
     public function show(Category $category)
     {
-        return response()->json([
-            'category' => $category,
-            'products' => $category->products
-        ]);
+        return view('admin.categories.show', compact('category'));
     }
 
     /**
@@ -57,19 +70,17 @@ class CategoryController extends Controller
     {
         $request->validate([
             'name' => 'required|string|max:255|unique:categories,name,' . $category->id,
+            'slug' => 'required|string|max:255|unique:categories,slug,' . $category->id,
             'description' => 'nullable|string',
         ]);
 
         $category->update([
             'name' => $request->name,
-            'slug' => Str::slug($request->name),
+            'slug' => $request->slug,
             'description' => $request->description,
         ]);
 
-        return response()->json([
-            'message' => 'Category updated successfully',
-            'category' => $category
-        ]);
+        return redirect('/admin/categories')->with('success', 'Category updated successfully!');
     }
 
     /**
@@ -79,6 +90,6 @@ class CategoryController extends Controller
     {
         $category->delete();
 
-        return response()->json(['message' => 'Category deleted successfully']);
+        return redirect('/admin/categories')->with('success', 'Category deleted successfully!');
     }
 }

@@ -28,9 +28,17 @@ Route::get('/categories/{category}', [CategoryController::class, 'show'])->name(
 
 // Admin Routes
 Route::middleware(['auth', 'role:admin'])->group(function () {
-    Route::resource('admin/products', ProductController::class)->except(['index', 'show']);
-    Route::resource('admin/categories', CategoryController::class)->except(['index', 'show']);
+    Route::get('/admin/dashboard', function () { return view('admin.dashboard'); });
+    Route::resource('admin/products', ProductController::class)->names('admin.products');
+    Route::resource('admin/categories', CategoryController::class)->names('admin.categories');
 });
+
+// Admin UI Previews
+Route::get('/admin/login', [AuthController::class, 'showAdminLogin'])->name('admin.login');
+Route::post('/admin/login', [AuthController::class, 'adminLogin']);
+
+
+
 
 // Auth Routes
 Route::middleware('guest')->group(function () {

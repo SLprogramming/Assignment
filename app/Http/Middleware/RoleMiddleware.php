@@ -16,7 +16,7 @@ class RoleMiddleware
     public function handle(Request $request, Closure $next, $role): Response
     {
         if (!$request->user() || $request->user()->role !== $role) {
-            abort(403, 'Unauthorized action.');
+            return redirect('/login')->withErrors(['email' => 'Access denied. You do not have the required permissions.']);
         }
 
         return $next($request);
