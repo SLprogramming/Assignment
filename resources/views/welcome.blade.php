@@ -44,15 +44,15 @@
         </div>
 
         <!-- Quick Category Shortcuts -->
-        <div class="flex items-center justify-start gap-4 overflow-x-auto pb-10 mb-4 px-8 flex-nowrap max-w-full">
+        <!-- <div class="flex items-center justify-start gap-4 overflow-x-auto pb-10 mb-4 px-8 flex-nowrap max-w-full">
             <span class="text-[10px] font-black text-text/20 uppercase tracking-widest mr-4 whitespace-nowrap flex-shrink-0">Filter:</span>
-            <a href="{{ route('products.index') }}" class="flex-shrink-0 px-6 py-2.5 bg-primary/5 border border-primary/10 text-primary text-[10px] font-black uppercase tracking-widest rounded-full hover:bg-primary hover:text-white transition-all whitespace-nowrap">All</a>
+            <a href="{{ route('products.index') }}" class="flex-shrink-0 px-6 py-2.5 bg-primary/5 border border-primary/10 text-primary text-[10px] font-black uppercase tracking-widest rounded-full hover:bg-primary hover:!text-white transition-all whitespace-nowrap">All</a>
             @foreach(\App\Models\Category::all() as $cat)
                 <a href="{{ route('products.index', ['category' => $cat->slug]) }}" class="flex-shrink-0 px-6 py-2.5 bg-card border border-border text-text/40 text-[10px] font-black uppercase tracking-widest rounded-full hover:border-primary/30 hover:text-primary transition-all whitespace-nowrap">
                     {{ $cat->name }}
                 </a>
             @endforeach
-        </div>
+        </div> -->
 
         <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 sm:gap-6">
             @forelse($latestProducts as $product)
@@ -68,6 +68,14 @@
                         <div class="absolute top-2 left-2 sm:top-3 sm:left-3">
                             <span class="px-1.5 py-0.5 sm:px-2 bg-primary text-white text-[7px] sm:text-[8px] font-black uppercase tracking-widest rounded-full shadow-lg shadow-primary/20">New</span>
                         </div>
+                        <div class="absolute top-2 right-2 sm:top-3 sm:right-3">
+                            <form action="{{ route('wishlist.toggle', $product) }}" method="POST">
+                                @csrf
+                                <button type="submit" class="p-2 rounded-full backdrop-blur-md transition-all duration-300 {{ auth()->check() && auth()->user()->wishlistProducts()->where('product_id', $product->id)->exists() ? 'bg-primary text-white' : 'bg-white/20 text-white hover:bg-white/40' }}">
+                                    <svg class="w-3 h-3 sm:w-4 sm:h-4" fill="{{ auth()->check() && auth()->user()->wishlistProducts()->where('product_id', $product->id)->exists() ? 'currentColor' : 'none' }}" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path></svg>
+                                </button>
+                            </form>
+                        </div>
                     </div>
                     <div class="p-3 sm:p-5">
                         <h3 class="font-bold text-text text-[11px] sm:text-sm line-clamp-1 mb-1">{{ $product->name }}</h3>
@@ -75,7 +83,7 @@
                             <span class="text-xs sm:text-sm font-black text-text">${{ number_format($product->price, 2) }}</span>
                             <span class="text-[8px] sm:text-[10px] text-text/30 font-bold uppercase tracking-tight italic">Stock: {{ $product->stock_qty }}</span>
                         </div>
-                        <a href="{{ route('products.show', $product) }}" class="w-full inline-flex items-center justify-center py-2 bg-primary/5 text-primary text-[9px] sm:text-[10px] font-black uppercase tracking-widest rounded-lg sm:rounded-xl hover:bg-primary hover:text-white transition-all duration-300">
+                        <a href="{{ route('products.show', $product) }}" class="w-full inline-flex items-center justify-center py-2 bg-primary/5 text-primary text-[9px] sm:text-[10px] font-black uppercase tracking-widest rounded-lg sm:rounded-xl hover:bg-primary hover:!text-white transition-all duration-200">
                             Details
                         </a>
                     </div>

@@ -56,7 +56,39 @@
                 <svg id="theme-toggle-light-icon" class="hidden w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 100 2h1z" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
             </button>
             @auth
-                <span class="text-sm font-medium text-text mt-0.5">Hey, {{ auth()->user()->name }}</span>
+                <div class="flex items-center gap-4">
+                    <a href="{{ route('wishlist.index') }}" class="p-2.5 rounded-xl bg-bg border border-border text-text/70 hover:text-primary transition-all duration-300 relative group">
+                        <svg class="w-5 h-5 group-hover:scale-110 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path></svg>
+                        @php
+                            $wishlistCount = auth()->user()->wishlistProducts()->count();
+                        @endphp
+                        @if($wishlistCount > 0)
+                            <span class="absolute -top-1 -right-1 flex h-4 w-4">
+                                <span class="relative inline-flex rounded-full h-4 w-4 bg-primary text-[8px] font-black text-white items-center justify-center">
+                                    {{ $wishlistCount }}
+                                </span>
+                            </span>
+                        @endif
+                    </a>
+                    <a href="{{ route('cart.index') }}" class="p-2.5 rounded-xl bg-bg border border-border text-text/70 hover:text-primary transition-all duration-300 relative group">
+                        <svg class="w-5 h-5 group-hover:scale-110 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path></svg>
+                        @php
+                            $cartCount = \App\Models\CartItem::where('user_id', auth()->id())->sum('quantity');
+                        @endphp
+                        @if($cartCount > 0)
+                            <span class="absolute -top-1 -right-1 flex h-4 w-4">
+                                <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
+                                <span class="relative inline-flex rounded-full h-4 w-4 bg-primary text-[8px] font-black text-white items-center justify-center">
+                                    {{ $cartCount }}
+                                </span>
+                            </span>
+                        @endif
+                    </a>
+                    <div class="flex flex-col">
+                        <span class="text-[10px] font-black text-text/30 uppercase tracking-[0.2em] leading-none mb-1">Authenticated</span>
+                        <span class="text-sm font-black text-text leading-none">{{ auth()->user()->name }}</span>
+                    </div>
+                </div>
                 <form action="{{ route('logout') }}" method="POST">
                     @csrf
                     <button type="submit" class="px-4 py-2 text-sm font-medium text-text border border-border rounded-lg transition-all hover:bg-bg">

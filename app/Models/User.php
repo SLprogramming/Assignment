@@ -50,4 +50,14 @@ class User extends Authenticatable
     {
         return $this->role === 'admin';
     }
+
+    public function cartItems()
+    {
+        return $this->hasMany(CartItem::class);
+    }
+
+    public function wishlistProducts()
+    {
+        return $this->belongsToMany(Product::class, 'wishlists')->withTimestamps();
+    }
 }

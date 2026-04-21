@@ -29,7 +29,13 @@ Route::get('/categories/{category}', [CategoryController::class, 'show'])->name(
 
 // Admin Routes
 Route::middleware(['auth', 'role:admin'])->group(function () {
-    Route::get('/admin/dashboard', function () { return view('admin.dashboard'); });
+    Route::get('/admin/dashboard', function () { 
+        $recentOrders = \App\Models\Order::with(['user'])->latest()->take(5)->get();
+        $totalSales = \App\Models\Order::where('status', 'completed')->sum('total_price');
+        $orderCount = \App\Models\Order::count();
+        $customerCount = \App\Models\User::count();
+        return view('admin.dashboard', compact('recentOrders', 'totalSales', 'orderCount', 'customerCount')); 
+    });
     Route::resource('admin/products', ProductController::class)->names('admin.products');
     Route::resource('admin/categories', CategoryController::class)->names('admin.categories');
 });
@@ -49,4 +55,25 @@ Route::middleware('guest')->group(function () {
     Route::post('/login', [AuthController::class, 'webLogin']);
 });
 
-Route::post('/logout', [AuthController::class, 'webLogout'])->name('logout')->middleware('auth');
+Route::middleware('auth')->group(function () {
+    Route::post('/logout', [AuthController::class, 'webLogout'])->name('logout');
+    
+    // Cart Routes
+    Route::get('/cart', [App\Http\Controllers\CartController::class, 'index'])->name('cart.index');
+    Route::post('/cart/add', [App\Http\Controllers\CartController::class, 'store'])->name('cart.add');
+    Route::patch('/cart/{cartItem}', [App\Http\Controllers\CartController::class, 'update'])->name('cart.update');
+    Route::delete('/cart/{cartItem}', [App\Http\Controllers\CartController::class, 'destroy'])->name('cart.destroy');
+    
+    // Order Routes
+    Route::post('/checkout', [App\Http\Controllers\OrderController::class, 'store'])->name('checkout.store');
+
+    // Wishlist Routes
+    Route::get('/wishlist', [App\Http\Controllers\WishlistController::class, 'index'])->name('wishlist.index');
+    Route::post('/wishlist/toggle/{product}', [App\Http\Controllers\WishlistController::class, 'toggle'])->name('wishlist.toggle');
+});
+
+// Admin Routes (Updated)
+Route::middleware(['auth', 'role:admin'])->group(function () {
+    Route::get('/admin/orders', [App\Http\Controllers\OrderController::class, 'index'])->name('admin.orders.index');
+    Route::patch('/admin/orders/{order}', [App\Http\Controllers\OrderController::class, 'update'])->name('admin.orders.update');
+});

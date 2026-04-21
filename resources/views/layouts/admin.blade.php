@@ -89,6 +89,10 @@
                     <svg class="w-5 h-5 group-hover:text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 11h.01M7 15h.01M13 7h.01M13 11h.01M13 15h.01M17 7h.01M17 11h.01M17 15h.01"></path></svg>
                     Categories
                 </a>
+                <a href="/admin/orders" class="flex items-center gap-3 px-4 py-3 {{ request()->is('admin/orders*') ? 'bg-primary/10 text-primary font-semibold' : 'text-text/70 hover:bg-bg transition-colors' }} rounded-xl group no-underline">
+                    <svg class="w-5 h-5 group-hover:text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"></path></svg>
+                    Orders
+                </a>
                 <div class="pt-4 pb-2 px-4">
                     <p class="text-[10px] font-bold uppercase tracking-widest text-text/30">Management</p>
                 </div>

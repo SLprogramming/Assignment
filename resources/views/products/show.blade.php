@@ -97,13 +97,48 @@
             </div>
 
             <div class="flex flex-col sm:flex-row gap-4">
-                <button class="flex-1 px-10 py-6 bg-primary text-white font-black uppercase tracking-[0.2em] rounded-2xl shadow-2xl shadow-primary/30 hover:bg-primary-hover hover:scale-[1.02] active:scale-95 transition-all duration-300 flex items-center justify-center gap-3">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path></svg>
-                    Add to Collection
-                </button>
-                <button class="px-8 py-6 bg-card border border-border text-text font-black rounded-2xl hover:bg-bg transition-all duration-300">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path></svg>
-                </button>
+                <form action="{{ route('cart.add') }}" method="POST" class="flex flex-col sm:flex-row gap-4 flex-1">
+                    @csrf
+                    <input type="hidden" name="product_id" value="{{ $product->id }}">
+                    
+                    <div class="flex items-center bg-card border border-border rounded-2xl h-[4.5rem]">
+                        <button type="button" onclick="decrementQty()" class="w-12 h-full flex items-center justify-center text-text/40 hover:text-primary transition-colors">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 12H4"></path></svg>
+                        </button>
+                        <input type="number" name="quantity" id="quantity" value="1" min="1" max="{{ $product->stock_qty }}" 
+                            class="w-16 bg-transparent text-center font-black text-lg text-text border-none focus:ring-0 appearance-none pointer-events-none" readonly>
+                        <button type="button" onclick="incrementQty()" class="w-12 h-full flex items-center justify-center text-text/40 hover:text-primary transition-colors">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
+                        </button>
+                    </div>
+
+                    <script>
+                        function incrementQty() {
+                            const input = document.getElementById('quantity');
+                            const max = parseInt(input.getAttribute('max'));
+                            if (parseInt(input.value) < max) {
+                                input.value = parseInt(input.value) + 1;
+                            }
+                        }
+                        function decrementQty() {
+                            const input = document.getElementById('quantity');
+                            if (parseInt(input.value) > 1) {
+                                input.value = parseInt(input.value) - 1;
+                            }
+                        }
+                    </script>
+
+                    <button type="submit" class="flex-1 px-10 py-6 bg-primary text-white font-black uppercase tracking-[0.2em] rounded-2xl shadow-2xl shadow-primary/30 hover:bg-primary-hover hover:scale-[1.02] active:scale-95 transition-all duration-300 flex items-center justify-center gap-3">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path></svg>
+                        Add to Cart
+                    </button>
+                </form>
+                <form action="{{ route('wishlist.toggle', $product) }}" method="POST">
+                    @csrf
+                    <button type="submit" class="px-8 py-6 rounded-2xl transition-all duration-300 {{ auth()->check() && auth()->user()->wishlistProducts()->where('product_id', $product->id)->exists() ? 'bg-primary text-white shadow-xl shadow-primary/30' : 'bg-card border border-border text-text hover:bg-bg' }}">
+                        <svg class="w-6 h-6" fill="{{ auth()->check() && auth()->user()->wishlistProducts()->where('product_id', $product->id)->exists() ? 'currentColor' : 'none' }}" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path></svg>
+                    </button>
+                </form>
             </div>
 
             <!-- Features -->
