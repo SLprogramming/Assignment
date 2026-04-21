@@ -47,7 +47,7 @@
     </script>
 </head>
 <body class="antialiased">
-    <nav class="sticky top-0 z-50 flex items-center justify-between px-8 py-6 backdrop-blur-md bg-card/80 border-b border-border shadow-sm">
+    <nav class="sticky top-0 z-50 flex items-center justify-between px-4 sm:px-8 py-6 backdrop-blur-md bg-card/80 border-b border-border shadow-sm">
         <a href="/" class="text-2xl font-bold text-primary tracking-tighter">Flannel</a>
         <div class="flex items-center gap-6">
             <!-- Theme Toggle -->
@@ -70,7 +70,7 @@
         </div>
     </nav>
 
-    <main class="flex-1 flex items-center justify-center p-8">
+    <main class="flex-1 p-8">
         @yield('content')
     </main>
 

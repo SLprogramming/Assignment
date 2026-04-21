@@ -120,11 +120,15 @@ class AuthController extends Controller
     }
 
     public function webLogout(Request $request)
-    {
+    {  
+        $user = Auth::user();
+        $isAdmin = $user->isAdmin();
         Auth::logout();
         $request->session()->invalidate();
         $request->session()->regenerateToken();
-
+        if($isAdmin) {
+            return redirect('/admin/login')->with('success','You have been logged out.');
+        }
         return redirect('/login')->with('success', 'You have been logged out.');
     }
 

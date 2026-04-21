@@ -35,6 +35,12 @@
                             class="w-full bg-bg border border-border px-5 py-4 rounded-2xl text-text focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all font-medium" required>
                     </div>
 
+                    <div>
+                        <label class="block text-xs font-black text-text/40 uppercase tracking-widest mb-2">Description</label>
+                        <textarea name="description" rows="5"
+                            class="w-full bg-bg border border-border px-5 py-4 rounded-2xl text-text placeholder-text/20 focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all font-medium resize-none">{{ old('description', $product->description) }}</textarea>
+                    </div>
+
                     <div class="grid grid-cols-2 gap-6">
                         <div>
                             <label class="block text-xs font-black text-text/40 uppercase tracking-widest mb-2">Price ($)</label>

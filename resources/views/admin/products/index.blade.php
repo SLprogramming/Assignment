@@ -102,9 +102,14 @@
     </table>
 </div>
 
-@if($products->count() > 0)
-<div class="mt-8 flex items-center justify-between px-4">
-    <p class="text-sm text-text/30 font-bold uppercase tracking-widest">Total: {{ $products->count() }} Items</p>
+@if($products->total() > 0)
+<div class="mt-8 flex flex-col md:flex-row items-center justify-between gap-6 px-4">
+    <p class="text-[10px] text-text/30 font-black uppercase tracking-widest order-2 md:order-1">
+        Showing {{ $products->firstItem() }} to {{ $products->lastItem() }} of {{ $products->total() }} products
+    </p>
+    <div class="order-1 md:order-2">
+        {{ $products->links() }}
+    </div>
 </div>
 @endif
 @endsection

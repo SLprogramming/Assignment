@@ -58,10 +58,18 @@ class CategoryController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Category $category)
+    public function show(Request $request, Category $category)
     {
         $products = $category->products()->latest()->paginate(12);
-        return view('admin.categories.show', compact('category', 'products'));
+
+        if ($request->is('admin/*')) {
+            return view('admin.categories.show', compact('category', 'products'));
+        }
+
+        // For public view, we can just reuse the products.index if we want 
+        // to keep it consistent, but with the category pre-selected.
+        // Or redirect to products.index with the category parameter.
+        return redirect()->route('products.index', ['category' => $category->slug]);
     }
 
     /**

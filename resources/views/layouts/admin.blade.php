@@ -33,7 +33,7 @@
     --color-text: #f1f5f9;         /* Off-white for readability */
     }
     body {
-        @apply font-['Inter'] bg-bg text-text min-h-screen flex flex-col transition-colors duration-300;
+        @apply font-['Inter'] bg-bg text-text h-screen flex flex-col transition-colors duration-300 overflow-hidden;
     }
     </style>
 
@@ -81,11 +81,11 @@
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"></path></svg>
                     Dashboard
                 </a>
-                <a href="/admin/products" class="flex items-center gap-3 px-4 py-3 {{ request()->is('admin/products*') ? 'bg-primary/10 text-primary font-semibold' : 'text-text/70 hover:bg-bg transition-colors' }} rounded-xl group underline-none!">
+                <a href="/admin/products" class="flex items-center gap-3 px-4 py-3 {{ request()->is('admin/products*') ? 'bg-primary/10 text-primary font-semibold' : 'text-text/70 hover:bg-bg transition-colors' }} rounded-xl group no-underline">
                     <svg class="w-5 h-5 group-hover:text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path></svg>
                     Products
                 </a>
-                <a href="/admin/categories" class="flex items-center gap-3 px-4 py-3 {{ request()->is('admin/categories*') ? 'bg-primary/10 text-primary font-semibold' : 'text-text/70 hover:bg-bg transition-colors' }} rounded-xl group underline-none!">
+                <a href="/admin/categories" class="flex items-center gap-3 px-4 py-3 {{ request()->is('admin/categories*') ? 'bg-primary/10 text-primary font-semibold' : 'text-text/70 hover:bg-bg transition-colors' }} rounded-xl group no-underline">
                     <svg class="w-5 h-5 group-hover:text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 11h.01M7 15h.01M13 7h.01M13 11h.01M13 15h.01M17 7h.01M17 11h.01M17 15h.01"></path></svg>
                     Categories
                 </a>

@@ -17,7 +17,8 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    $latestProducts = \App\Models\Product::latest()->take(10)->get();
+    return view('welcome', compact('latestProducts'));
 });
 
 // Public Routes

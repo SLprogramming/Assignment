@@ -12,10 +12,27 @@ class ProductController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $products = Product::with('categories')->latest()->get();
-        return view('admin.products.index', compact('products'));
+        $query = Product::with('categories')->latest();
+
+        // Category Filtering
+        if ($request->has('category')) {
+            $query->whereHas('categories', function($q) use ($request) {
+                $q->where('categories.id', $request->category)
+                  ->orWhere('categories.slug', $request->category);
+            });
+        }
+
+        $products = $query->paginate(12);
+        $categories = Category::withCount('products')->get();
+
+        if ($request->is('admin/*')) {
+             // Admin doesn't need all categories in the same way, but keeping it simple
+            return view('admin.products.index', compact('products'));
+        }
+
+        return view('products.index', compact('products', 'categories'));
     }
 
     /**
@@ -34,6 +51,7 @@ class ProductController extends Controller
     {
         $request->validate([
             'name' => 'required|string|max:255',
+            'description' => 'nullable|string',
             'price' => 'required|numeric|min:0',
             'stock_qty' => 'required|integer|min:0',
             'photo' => 'nullable|image|max:2048',
@@ -41,7 +59,7 @@ class ProductController extends Controller
             'categories.*' => 'exists:categories,id'
         ]);
 
-        $productData = $request->only(['name', 'price', 'stock_qty']);
+        $productData = $request->only(['name', 'price', 'stock_qty', 'description']);
 
         if ($request->hasFile('photo')) {
             $path = $request->file('photo')->store('products', 'public');
@@ -55,6 +73,15 @@ class ProductController extends Controller
         }
 
         return redirect()->route('admin.products.index')->with('success', 'Product created successfully!');
+    }
+
+    /**
+     * Display the specified resource.
+     */
+    public function show(Product $product)
+    {
+        $product->load('categories');
+        return view('products.show', compact('product'));
     }
 
     /**
@@ -73,6 +100,7 @@ class ProductController extends Controller
     {
         $request->validate([
             'name' => 'required|string|max:255',
+            'description' => 'nullable|string',
             'price' => 'required|numeric|min:0',
             'stock_qty' => 'required|integer|min:0',
             'photo' => 'nullable|image|max:2048',
@@ -80,9 +108,14 @@ class ProductController extends Controller
             'categories.*' => 'exists:categories,id'
         ]);
 
-        $productData = $request->only(['name', 'price', 'stock_qty']);
+        $productData = $request->only(['name', 'price', 'stock_qty', 'description']);
 
         if ($request->hasFile('photo')) {
+            // Delete old photo if it exists
+            if ($product->photo && file_exists(public_path($product->photo))) {
+                unlink(public_path($product->photo));
+            }
+
             $path = $request->file('photo')->store('products', 'public');
             $productData['photo'] = "storage/" . $path;
         }
