@@ -29,6 +29,7 @@ Route::get('/categories/{category}', [CategoryController::class, 'show'])->name(
 
 // Admin Routes
 Route::middleware(['auth', 'role:admin'])->group(function () {
+    Route::get('/admin', function() { return redirect('/admin/dashboard'); });
     Route::get('/admin/dashboard', function () { 
         $recentOrders = \App\Models\Order::with(['user'])->latest()->take(5)->get();
         $totalSales = \App\Models\Order::where('status', 'completed')->sum('total_price');

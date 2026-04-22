@@ -89,6 +89,11 @@
                         <span class="text-sm font-black text-text leading-none">{{ auth()->user()->name }}</span>
                     </div>
                 </div>
+                @if(auth()->user()->isAdmin())
+                    <a href="/admin/dashboard" class="px-4 py-2 text-sm font-black text-primary border border-primary/20 bg-primary/5 rounded-lg transition-all hover:bg-primary/10">
+                        Admin Dashboard
+                    </a>
+                @endif
                 <form action="{{ route('logout') }}" method="POST">
                     @csrf
                     <button type="submit" class="px-4 py-2 text-sm font-medium text-text border border-border rounded-lg transition-all hover:bg-bg">

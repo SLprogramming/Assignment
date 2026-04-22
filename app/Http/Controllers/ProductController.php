@@ -78,9 +78,14 @@ class ProductController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Product $product)
+    public function show(Request $request, Product $product)
     {
         $product->load('categories');
+
+        if ($request->is('admin/*')) {
+            return view('admin.products.edit', compact('product', 'categories')); // Or a show view if you had one, but edit is common for admin
+        }
+        
         return view('products.show', compact('product'));
     }
 

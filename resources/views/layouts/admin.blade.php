@@ -61,11 +61,11 @@
             <div class="h-8 w-px bg-border"></div>
             <div class="flex items-center gap-3">
                 <div class="text-right hidden sm:block">
-                    <p class="text-sm font-semibold text-text">{{ auth()->user()->name ?? 'Admin User' }}</p>
+                    <p class="text-sm font-semibold text-text">{{ auth()->user()?->name ?? 'Admin User' }}</p>
                     <p class="text-xs text-text/50">Super Administrator</p>
                 </div>
-                <div class="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary font-bold">
-                    {{ substr(auth()->user()->name ?? 'A', 0, 1) }}
+                <div class="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary font-bold transition-transform hover:scale-110">
+                    {{ substr(auth()->user()?->name ?? 'A', 0, 1) }}
                 </div>
             </div>
             @endif
@@ -75,7 +75,7 @@
     <div class="flex flex-1 overflow-hidden">
         <!-- Sidebar -->
         @if(!isset($simpleLayout))
-        <aside class="w-64 hidden md:flex flex-col bg-card border-r border-border py-6 px-4">
+        <aside class="flex-shrink-0 w-64 flex flex-col bg-card border-r border-border py-6 px-4">
             <nav class="flex-1 space-y-1">
                 <a href="/admin/dashboard" class="flex items-center gap-3 px-4 py-3 {{ request()->is('admin/dashboard') ? 'bg-primary/10 text-primary font-semibold' : 'text-text/70 hover:bg-bg transition-colors' }} rounded-xl">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"></path></svg>

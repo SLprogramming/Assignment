@@ -11,10 +11,15 @@ class CategoryController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
         $categories = Category::withCount('products')->get();
-        return view('admin.categories.index', compact('categories'));
+
+        if ($request->is('admin/*')) {
+            return view('admin.categories.index', compact('categories'));
+        }
+
+        return view('categories.index', compact('categories'));
     }
 
     /**

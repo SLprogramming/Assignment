@@ -111,6 +111,9 @@ class AuthController extends Controller
 
         if (Auth::attempt($fields)) {
             $request->session()->regenerate();
+            if (Auth::user()->isAdmin()) {
+                return redirect('/admin/dashboard')->with('success', 'Welcome Boss!');
+            }
             return redirect('/')->with('success', 'Welcome back!');
         }
 
