@@ -100,11 +100,11 @@
     <section class="mb-20 p-12 lg:p-20 bg-primary/5 border border-primary/10 rounded-[4rem] text-center relative overflow-hidden">
         <div class="absolute top-0 right-0 w-64 h-64 bg-primary/10 blur-[100px] -translate-y-1/2 translate-x-1/2 rounded-full"></div>
         <div class="relative z-10 max-w-2xl mx-auto">
-            <h2 class="text-4xl font-black text-text mb-6 italic">Stay in the Loop</h2>
-            <p class="text-text/60 text-lg mb-10 font-medium leading-relaxed">Join our elite community and be the first to know about new stock, exclusive drops, and limited edition releases.</p>
-            <form class="flex flex-col sm:flex-row gap-3">
-                <input type="email" placeholder="Enter your email address..." class="flex-1 px-8 py-5 bg-card border border-border rounded-2xl focus:outline-none focus:ring-2 focus:ring-primary/50 text-text font-medium">
-                <button type="submit" class="px-10 py-5 bg-text text-bg dark:bg-primary dark:text-white font-bold rounded-2xl hover:scale-105 transition-all duration-300">Subscribe</button>
+            <h2 class="text-4xl font-black text-text mb-6 italic">Join the Vault</h2>
+            <p class="text-text/60 text-lg mb-10 font-medium leading-relaxed">Create your exclusive account today to unlock member pricing, rapid checkout, and complete order history tracking.</p>
+            <form action="{{ route('register') }}" method="GET" class="flex flex-col sm:flex-row gap-3">
+                <input type="email" name="email" placeholder="Enter your email address..." class="flex-1 px-8 py-5 bg-card border border-border rounded-2xl focus:outline-none focus:ring-2 focus:ring-primary/50 text-text font-medium" required>
+                <button type="submit" class="px-10 py-5 bg-text text-bg dark:bg-primary dark:text-white font-bold rounded-2xl hover:scale-105 transition-all duration-300">Register</button>
             </form>
         </div>
     </section>
