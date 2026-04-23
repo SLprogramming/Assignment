@@ -41,11 +41,16 @@
                             class="w-full bg-bg border border-border px-5 py-4 rounded-2xl text-text placeholder-text/20 focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all font-medium resize-none">{{ old('description', $product->description) }}</textarea>
                     </div>
 
-                    <div class="grid grid-cols-2 gap-6">
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                         <div>
                             <label class="block text-xs font-black text-text/40 uppercase tracking-widest mb-2">Price ($)</label>
                             <input type="number" name="price" value="{{ old('price', $product->price) }}" step="0.01" 
                                 class="w-full bg-bg border border-border px-5 py-4 rounded-2xl text-text focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all font-medium" required>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-black text-text/40 uppercase tracking-widest mb-2">Discount (%)</label>
+                            <input type="number" name="discount_percentage" value="{{ old('discount_percentage', $product->discount_percentage) }}" min="0" max="100" placeholder="0" 
+                                class="w-full bg-bg border border-border px-5 py-4 rounded-2xl text-text placeholder-text/40 focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all font-medium">
                         </div>
                         <div>
                             <label class="block text-xs font-black text-text/40 uppercase tracking-widest mb-2">Stock Level</label>

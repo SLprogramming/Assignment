@@ -5,7 +5,7 @@
     <!-- Header -->
     <header class="mb-10 text-center animate-in fade-in slide-in-from-bottom duration-700">
         <span class="text-primary text-xs font-black uppercase tracking-[0.3em] mb-4 block">Our Curated Collection</span>
-        <h1 class="text-4xl md:text-6xl font-black text-text tracking-tight mb-6 italic">The Flannel Vault</h1>
+        <h1 class="text-4xl md:text-6xl font-black text-text tracking-tight mb-6 italic">The ShopNest Vault</h1>
         <p class="text-text/60 max-w-2xl mx-auto font-medium leading-relaxed">
             Explore our meticulously curated selection of premium essentials. Each piece in our vault is chosen for its exceptional quality and timeless aesthetic.
         </p>

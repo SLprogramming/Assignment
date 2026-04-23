@@ -32,7 +32,7 @@ class OrderController extends Controller
         }
 
         $totalPrice = $cartItems->sum(function ($item) {
-            return $item->product->price * $item->quantity;
+            return $item->product->discounted_price * $item->quantity;
         });
 
         DB::transaction(function () use ($cartItems, $totalPrice) {
@@ -47,7 +47,7 @@ class OrderController extends Controller
                     'order_id' => $order->id,
                     'product_id' => $item->product_id,
                     'quantity' => $item->quantity,
-                    'price' => $item->product->price,
+                    'price' => $item->product->discounted_price,
                 ]);
 
                 // Optional: Reduce stock

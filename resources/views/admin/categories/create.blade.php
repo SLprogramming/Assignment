@@ -39,7 +39,7 @@
                     </button>
                 </div>
                 <div class="relative">
-                    <span class="absolute left-4 top-1/2 -translate-y-1/2 text-text/20 text-xs font-medium">flannel.com/category/</span>
+                    <span class="absolute left-4 top-1/2 -translate-y-1/2 text-text/20 text-xs font-medium">shopnest.com/category/</span>
                     <input type="text" id="slug" name="slug" placeholder="winter-essentials" value="{{ old('slug') }}"
                         class="w-full bg-transparent border-b border-border py-2 pl-36 pr-4 text-text/50 focus:outline-none focus:border-primary transition-all text-sm font-medium">
                 </div>

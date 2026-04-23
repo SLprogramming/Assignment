@@ -34,13 +34,13 @@
                     placeholder="••••••••" required>
             </div>
 
-            <div class="flex items-center justify-between">
+            <!-- <div class="flex items-center justify-between">
                 <label class="flex items-center gap-2 text-sm text-text/60 cursor-pointer group">
                     <input type="checkbox" name="remember" class="w-4 h-4 rounded border-border bg-bg accent-primary">
                     <span class="group-hover:text-text transition-colors">Remember me</span>
                 </label>
                 <a href="#" class="text-xs text-primary hover:text-primary-hover transition-colors">Forgot password?</a>
-            </div>
+            </div> -->
 
             <button type="submit" class="w-full bg-primary hover:bg-primary-hover text-white font-semibold py-4 rounded-xl transition-all hover:-translate-y-0.5 shadow-lg shadow-primary/20 active:scale-[0.98]">
                 Sign In

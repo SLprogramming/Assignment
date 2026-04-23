@@ -29,7 +29,7 @@
             <label class="block text-sm font-medium mb-2" for="email">Admin Email</label>
             <input type="email" name="email" id="email"
                 class="w-full bg-bg border border-border px-4 py-3 rounded-xl text-text placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all" 
-                placeholder="admin@flannel.com" value="{{ old('email') }}" required autofocus>
+                placeholder="admin@shopnest.com" value="{{ old('email') }}" required autofocus>
         </div>
 
         <div>

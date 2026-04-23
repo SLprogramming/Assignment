@@ -10,7 +10,7 @@
         </div>
         <h1 class="text-4xl md:text-6xl font-black text-text tracking-tight italic">Your Wishlist</h1>
         <p class="text-text/60 mt-4 max-w-2xl font-medium leading-relaxed">
-            A curated selection of your favorite pieces from the Flannel Vault. Secured and ready for your next acquisition.
+            A curated selection of your favorite pieces from the ShopNest Vault. Secured and ready for your next acquisition.
         </p>
     </header>
 

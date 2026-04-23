@@ -54,12 +54,13 @@ class ProductController extends Controller
             'description' => 'nullable|string',
             'price' => 'required|numeric|min:0',
             'stock_qty' => 'required|integer|min:0',
+            'discount_percentage' => 'nullable|integer|min:0|max:100',
             'photo' => 'nullable|image|max:2048',
             'categories' => 'nullable|array',
             'categories.*' => 'exists:categories,id'
         ]);
 
-        $productData = $request->only(['name', 'price', 'stock_qty', 'description']);
+        $productData = $request->only(['name', 'price', 'stock_qty', 'description', 'discount_percentage']);
 
         if ($request->hasFile('photo')) {
             $path = $request->file('photo')->store('products', 'public');
@@ -108,12 +109,13 @@ class ProductController extends Controller
             'description' => 'nullable|string',
             'price' => 'required|numeric|min:0',
             'stock_qty' => 'required|integer|min:0',
+            'discount_percentage' => 'nullable|integer|min:0|max:100',
             'photo' => 'nullable|image|max:2048',
             'categories' => 'nullable|array',
             'categories.*' => 'exists:categories,id'
         ]);
 
-        $productData = $request->only(['name', 'price', 'stock_qty', 'description']);
+        $productData = $request->only(['name', 'price', 'stock_qty', 'description', 'discount_percentage']);
 
         if ($request->hasFile('photo')) {
             // Delete old photo if it exists

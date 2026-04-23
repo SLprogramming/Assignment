@@ -9,7 +9,7 @@ class Product extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'price', 'stock_qty', 'photo', 'description'];
+    protected $fillable = ['name', 'price', 'stock_qty', 'photo', 'description', 'discount_percentage'];
 
     public function categories()
     {
@@ -24,5 +24,13 @@ class Product extends Model
     public function wishlistedBy()
     {
         return $this->belongsToMany(User::class, 'wishlists')->withTimestamps();
+    }
+
+    public function getDiscountedPriceAttribute()
+    {
+        if ($this->discount_percentage) {
+            return round($this->price * (1 - $this->discount_percentage / 100), 2);
+        }
+        return $this->price;
     }
 }

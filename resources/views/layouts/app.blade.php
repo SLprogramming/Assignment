@@ -48,7 +48,7 @@
 </head>
 <body class="antialiased">
     <nav class="sticky top-0 z-50 flex items-center justify-between px-4 sm:px-8 py-6 backdrop-blur-md bg-card/80 border-b border-border shadow-sm">
-        <a href="/" class="text-2xl font-bold text-primary tracking-tighter">Flannel</a>
+        <a href="/" class="text-2xl font-bold text-primary tracking-tighter">ShopNest</a>
         <div class="flex items-center gap-6">
             <!-- Theme Toggle -->
             <button id="theme-toggle" class="p-2 rounded-xl bg-bg border border-border text-text/70 hover:text-primary transition-all duration-300 hover:shadow-lg hover:shadow-primary/10">

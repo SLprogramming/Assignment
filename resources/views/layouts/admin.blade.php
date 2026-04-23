@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Dashboard - {{ config('app.name', 'Flannel') }}</title>
+    <title>Admin Dashboard - {{ config('app.name', 'ShopNest') }}</title>
     
     <!-- Google Fonts: Inter -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -49,7 +49,7 @@
     <!-- Top Bar -->
     <nav class="sticky top-0 z-50 flex items-center justify-between px-8 py-4 backdrop-blur-md bg-card/80 border-b border-border shadow-sm">
         <div class="flex items-center gap-4">
-            <a href="/" class="text-xl font-bold text-primary tracking-tighter">Flannel Admin</a>
+            <a href="/" class="text-xl font-bold text-primary tracking-tighter">ShopNest Admin</a>
         </div>
         
         <div class="flex items-center gap-6">

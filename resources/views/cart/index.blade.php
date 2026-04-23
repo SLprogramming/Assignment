@@ -51,7 +51,12 @@
                                     </h3>
                                     <p class="text-xs font-bold text-text/30 uppercase tracking-widest">SKU: FLN-{{ str_pad($item->product->id, 4, '0', STR_PAD_LEFT) }}</p>
                                 </div>
-                                <span class="text-xl font-black text-primary whitespace-nowrap">${{ number_format($item->product->price * $item->quantity, 2) }}</span>
+                                <div class="text-right">
+                                    <span class="text-xl font-black text-primary whitespace-nowrap">${{ number_format($item->product->discounted_price * $item->quantity, 2) }}</span>
+                                    @if($item->product->discount_percentage)
+                                        <p class="text-[10px] text-red-500 font-bold uppercase tracking-widest mt-1">{{ $item->product->discount_percentage }}% Discount Applied</p>
+                                    @endif
+                                </div>
                             </div>
 
                             <div class="flex items-center gap-6 mt-6">
@@ -94,7 +99,7 @@
                     <div class="space-y-4 mb-8">
                         <div class="flex justify-between text-sm">
                             <span class="text-text/40 font-bold uppercase tracking-widest">Subtotal</span>
-                            <span class="text-text font-black">${{ number_format($cartItems->sum(fn($i) => $i->product->price * $i->quantity), 2) }}</span>
+                            <span class="text-text font-black">${{ number_format($cartItems->sum(fn($i) => $i->product->discounted_price * $i->quantity), 2) }}</span>
                         </div>
                         <div class="flex justify-between text-sm">
                             <span class="text-text/40 font-bold uppercase tracking-widest">Shipping</span>
@@ -103,7 +108,7 @@
                         <div class="h-px bg-border my-6"></div>
                         <div class="flex justify-between items-end">
                             <span class="text-xs font-bold text-text/40 uppercase tracking-[0.2em]">Total Amount</span>
-                            <span class="text-4xl font-black text-primary tracking-tighter">${{ number_format($cartItems->sum(fn($i) => $i->product->price * $i->quantity), 2) }}</span>
+                            <span class="text-4xl font-black text-primary tracking-tighter">${{ number_format($cartItems->sum(fn($i) => $i->product->discounted_price * $i->quantity), 2) }}</span>
                         </div>
                     </div>
 

@@ -55,12 +55,17 @@
                                 <form action="{{ route('admin.orders.update', $order) }}" method="POST" class="flex items-center gap-2">
                                     @csrf
                                     @method('PATCH')
-                                    <select name="status" onchange="this.form.submit()" class="bg-bg border border-border text-xs font-black text-text rounded-lg px-3 py-2 focus:ring-primary focus:border-primary outline-none transition-all">
-                                        <option value="pending" {{ $order->status == 'pending' ? 'selected' : '' }}>Pending</option>
-                                        <option value="processing" {{ $order->status == 'processing' ? 'selected' : '' }}>Processing</option>
-                                        <option value="completed" {{ $order->status == 'completed' ? 'selected' : '' }}>Completed</option>
-                                        <option value="cancelled" {{ $order->status == 'cancelled' ? 'selected' : '' }}>Cancelled</option>
-                                    </select>
+                                    <div class="relative group">
+                                        <select name="status" onchange="this.form.submit()" class="appearance-none bg-bg/50 backdrop-blur-md border border-border/80 hover:border-primary/50 text-[10px] font-black text-text uppercase tracking-widest rounded-xl px-4 py-2 pr-10 focus:ring-2 focus:ring-primary/20 focus:border-primary/80 outline-none transition-all cursor-pointer shadow-sm w-36">
+                                            <option value="pending" {{ $order->status == 'pending' ? 'selected' : '' }} class="bg-bg text-text uppercase tracking-widest font-black">Pending</option>
+                                            <option value="processing" {{ $order->status == 'processing' ? 'selected' : '' }} class="bg-bg text-text uppercase tracking-widest font-black">Processing</option>
+                                            <option value="completed" {{ $order->status == 'completed' ? 'selected' : '' }} class="bg-bg text-text uppercase tracking-widest font-black">Completed</option>
+                                            <option value="cancelled" {{ $order->status == 'cancelled' ? 'selected' : '' }} class="bg-bg text-text uppercase tracking-widest font-black">Cancelled</option>
+                                        </select>
+                                        <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-3 text-text/40 group-hover:text-primary transition-colors">
+                                            <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M19 9l-7 7-7-7"></path></svg>
+                                        </div>
+                                    </div>
                                 </form>
                             </td>
                         </tr>

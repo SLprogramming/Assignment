@@ -6,14 +6,14 @@
         <h1 class="text-3xl font-bold tracking-tight text-text">Dashboard Overview</h1>
         <p class="text-text/60">Real-time performance analytics and management.</p>
     </div>
-    <div class="flex items-center gap-3">
+    <!-- <div class="flex items-center gap-3">
         <button class="px-5 py-2.5 bg-card border border-border text-text/70 font-semibold rounded-xl hover:bg-bg transition-all">
             Export Report
         </button>
         <button class="px-5 py-2.5 bg-primary text-white font-semibold rounded-xl shadow-lg shadow-primary/20 hover:bg-primary-hover transition-all">
             + Add New
         </button>
-    </div>
+    </div> -->
 </header>
 
 <!-- Stats Cards -->
