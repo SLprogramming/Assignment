@@ -17,7 +17,9 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    $latestProducts = \App\Models\Product::latest()->take(10)->get();
+    $latestProducts = \App\Models\Product::where(function($q) {
+        $q->whereNull('discount_percentage')->orWhere('discount_percentage', 0);
+    })->latest()->take(10)->get();
     return view('welcome', compact('latestProducts'));
 });
 

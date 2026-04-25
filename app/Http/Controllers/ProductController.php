@@ -24,13 +24,23 @@ class ProductController extends Controller
             });
         }
 
-        $products = $query->paginate(12);
-        $categories = Category::withCount('products')->get();
+        // Search Filtering
+        if ($request->has('search') && $request->search != '') {
+            $searchTerm = $request->search;
+            $query->where(function($q) use ($searchTerm) {
+                $q->where('name', 'like', '%' . $searchTerm . '%')
+                  ->orWhere('description', 'like', '%' . $searchTerm . '%')
+                  ->orWhere('id', 'like', '%' . $searchTerm . '%');
+            });
+        }
 
         if ($request->is('admin/*')) {
-             // Admin doesn't need all categories in the same way, but keeping it simple
+            $products = $query->paginate(10)->withQueryString();
             return view('admin.products.index', compact('products'));
         }
+
+        $products = $query->paginate(12)->withQueryString();
+        $categories = Category::withCount('products')->get();
 
         return view('products.index', compact('products', 'categories'));
     }
@@ -87,7 +97,9 @@ class ProductController extends Controller
             return view('admin.products.edit', compact('product', 'categories')); // Or a show view if you had one, but edit is common for admin
         }
         
-        return view('products.show', compact('product'));
+        $relatedProducts = Product::where('id', '!=', $product->id)->inRandomOrder()->take(4)->get();
+
+        return view('products.show', compact('product', 'relatedProducts'));
     }
 
     /**

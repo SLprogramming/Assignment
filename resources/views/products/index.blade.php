@@ -29,7 +29,7 @@
     </div>
 
     <!-- Products Grid -->
-    <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
+    <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8" id="product-list">
         @forelse($products as $product)
             <div class="group relative bg-card border border-border rounded-[2.5rem] overflow-hidden transition-all duration-500 hover:shadow-2xl hover:-translate-y-2">
                 <div class="aspect-[4/5] bg-bg/50 relative overflow-hidden">
@@ -67,7 +67,14 @@
                 <div class="p-6">
                     <div class="flex items-start justify-between mb-2">
                         <h3 class="font-bold text-text text-lg line-clamp-1 truncate pe-2">{{ $product->name }}</h3>
-                        <span class="text-primary font-black text-lg">${{ number_format($product->price, 2) }}</span>
+                        <div class="flex flex-col items-end leading-none">
+                            @if($product->discount_percentage > 0)
+                                <span class="text-text/40 font-bold text-xs line-through mb-1">${{ number_format($product->price, 2) }}</span>
+                                <span class="text-primary font-black text-lg">${{ number_format($product->price - ($product->price * ($product->discount_percentage / 100)), 2) }}</span>
+                            @else
+                                <span class="text-primary font-black text-lg">${{ number_format($product->price, 2) }}</span>
+                            @endif
+                        </div>
                     </div>
                     
                     <div class="flex flex-wrap gap-1 mb-4">
@@ -98,9 +105,46 @@
         @endforelse
     </div>
 
-    <!-- Pagination -->
-    <div class="mt-20">
-        {{ $products->links() }}
-    </div>
+    <!-- Load More -->
+    @if($products->hasMorePages())
+        <div class="mt-20 flex justify-center" id="load-more-container">
+            <button id="load-more-btn" data-url="{{ $products->nextPageUrl() }}" class="px-10 py-5 bg-card border border-border text-text font-black uppercase tracking-widest rounded-3xl shadow-xl hover:-translate-y-1 hover:border-primary/30 transition-all">
+                Load More Products
+            </button>
+        </div>
+    @endif
 </div>
+
+<script>
+document.addEventListener('click', function(e) {
+    if(e.target && e.target.id === 'load-more-btn') {
+        const url = e.target.getAttribute('data-url');
+        if(!url) return;
+        
+        e.target.innerText = 'Loading...';
+        e.target.disabled = true;
+
+        fetch(url, { headers: { 'X-Requested-With': 'XMLHttpRequest' } })
+        .then(res => res.text())
+        .then(data => {
+            const parser = new DOMParser();
+            const doc = parser.parseFromString(data, 'text/html');
+            const newProducts = doc.getElementById('product-list').innerHTML;
+            document.getElementById('product-list').insertAdjacentHTML('beforeend', newProducts);
+            
+            const newLoadMore = doc.getElementById('load-more-container');
+            const currentLoadMore = document.getElementById('load-more-container');
+            if(newLoadMore) {
+                currentLoadMore.outerHTML = newLoadMore.outerHTML;
+            } else {
+                currentLoadMore.remove();
+            }
+        }).catch(err => {
+            console.error(err);
+            e.target.innerText = 'Load More Products';
+            e.target.disabled = false;
+        });
+    }
+});
+</script>
 @endsection

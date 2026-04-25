@@ -56,7 +56,14 @@
                     {{ $product->name }}
                 </h1>
                 <div class="flex items-center gap-6">
-                    <span class="text-4xl font-black text-primary">${{ number_format($product->price, 2) }}</span>
+                    @if($product->discount_percentage > 0)
+                        <div class="flex flex-col items-start leading-none h-full justify-center">
+                            <span class="text-xl font-bold text-text/40 line-through mb-1">${{ number_format($product->price, 2) }}</span>
+                            <span class="text-4xl font-black text-primary">${{ number_format($product->price - ($product->price * ($product->discount_percentage / 100)), 2) }}</span>
+                        </div>
+                    @else
+                        <span class="text-4xl font-black text-primary">${{ number_format($product->price, 2) }}</span>
+                    @endif
                     <div class="h-6 w-px bg-border"></div>
                     <span class="text-sm font-bold text-text/40 uppercase tracking-widest">
                         SKU: FLN-{{ str_pad($product->id, 4, '0', STR_PAD_LEFT) }}
@@ -166,11 +173,30 @@
             <a href="/products" class="text-xs font-black text-primary uppercase tracking-widest hover:underline decoration-2 underline-offset-8">Explore More →</a>
         </div>
         <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
-            <!-- This would normally be a loop of related products -->
-             <div class="aspect-[4/5] bg-primary/5 rounded-[2rem] border border-dashed border-primary/20 flex items-center justify-center text-primary/30 font-bold italic">Curated Suggestion...</div>
-             <div class="aspect-[4/5] bg-primary/5 rounded-[2rem] border border-dashed border-primary/20 flex items-center justify-center text-primary/30 font-bold italic">Curated Suggestion...</div>
-             <div class="aspect-[4/5] bg-primary/5 rounded-[2rem] border border-dashed border-primary/20 flex items-center justify-center text-primary/30 font-bold italic">Curated Suggestion...</div>
-             <div class="aspect-[4/5] bg-primary/5 rounded-[2rem] border border-dashed border-primary/20 flex items-center justify-center text-primary/30 font-bold italic">Curated Suggestion...</div>
+            @foreach($relatedProducts as $related)
+                <a href="{{ route('products.show', $related) }}" class="group relative bg-card border border-border rounded-[2rem] overflow-hidden hover:-translate-y-2 hover:shadow-2xl transition-all duration-500">
+                    <div class="aspect-[4/5] bg-bg/50 relative overflow-hidden">
+                        @if($related->photo)
+                            <img src="{{ asset($related->photo) }}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" alt="{{ $related->name }}">
+                        @else
+                            <div class="flex items-center justify-center h-full text-text/5">
+                                <svg class="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 00-2 2z"></path></svg>
+                            </div>
+                        @endif
+                    </div>
+                    <div class="p-6 flex flex-col items-center text-center">
+                        <span class="text-text font-bold text-sm truncate w-full mb-1">{{ $related->name }}</span>
+                        @if($related->discount_percentage > 0)
+                            <div class="flex items-center gap-2">
+                                <span class="text-text/40 font-bold text-[10px] line-through">${{ number_format($related->price, 2) }}</span>
+                                <span class="text-primary font-black text-sm">${{ number_format($related->price - ($related->price * ($related->discount_percentage / 100)), 2) }}</span>
+                            </div>
+                        @else
+                            <span class="text-primary font-black text-sm">${{ number_format($related->price, 2) }}</span>
+                        @endif
+                    </div>
+                </a>
+            @endforeach
         </div>
     </section>
 </div>
