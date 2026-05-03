@@ -58,11 +58,11 @@
                 <div class="flex items-center gap-6">
                     @if($product->discount_percentage > 0)
                         <div class="flex flex-col items-start leading-none h-full justify-center">
-                            <span class="text-xl font-bold text-text/40 line-through mb-1">${{ number_format($product->price, 2) }}</span>
-                            <span class="text-4xl font-black text-primary">${{ number_format($product->price - ($product->price * ($product->discount_percentage / 100)), 2) }}</span>
+                            <span class="text-lg md:text-xl font-bold text-text/40 line-through mb-1">${{ number_format($product->price, 2) }}</span>
+                            <span class="text-3xl md:text-4xl font-black text-primary">${{ number_format($product->price - ($product->price * ($product->discount_percentage / 100)), 2) }}</span>
                         </div>
                     @else
-                        <span class="text-4xl font-black text-primary">${{ number_format($product->price, 2) }}</span>
+                        <span class="text-3xl md:text-4xl font-black text-primary">${{ number_format($product->price, 2) }}</span>
                     @endif
                     <div class="h-6 w-px bg-border"></div>
                     <span class="text-sm font-bold text-text/40 uppercase tracking-widest">
@@ -169,10 +169,10 @@
     <!-- Related Section (Placeholder for aesthetic) -->
     <section class="mt-32 pt-24 border-t border-border/50">
         <div class="flex items-center justify-between mb-12">
-            <h2 class="text-3xl font-black text-text italic">The Vault Selection</h2>
+            <h2 class="text-2xl md:text-3xl font-black text-text italic">The Vault Selection</h2>
             <a href="/products" class="text-xs font-black text-primary uppercase tracking-widest hover:underline decoration-2 underline-offset-8">Explore More →</a>
         </div>
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 md:gap-8">
             @foreach($relatedProducts as $related)
                 <a href="{{ route('products.show', $related) }}" class="group relative bg-card border border-border rounded-[2rem] overflow-hidden hover:-translate-y-2 hover:shadow-2xl transition-all duration-500">
                     <div class="aspect-[4/5] bg-bg/50 relative overflow-hidden">

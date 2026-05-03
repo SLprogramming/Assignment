@@ -12,15 +12,19 @@
     </header>
 
     <!-- Category Filter Bar -->
-    <div class="mb-12 animate-in fade-in slide-in-from-bottom duration-700 delay-200 w-full">
-        <div class="flex items-center justify-start gap-4 overflow-x-auto pb-6 px-8 flex-nowrap w-full">
+    <div class="mb-12 animate-in fade-in slide-in-from-bottom duration-700 delay-200 w-full relative">
+        <!-- Fade masks for scroll indication -->
+        <div class="absolute left-0 top-0 bottom-6 w-8 bg-gradient-to-r from-bg to-transparent z-10 pointer-events-none sm:hidden"></div>
+        <div class="absolute right-0 top-0 bottom-6 w-8 bg-gradient-to-l from-bg to-transparent z-10 pointer-events-none sm:hidden"></div>
+        
+        <div class="flex items-center justify-start gap-2 sm:gap-4 overflow-x-auto pb-6 px-4 sm:px-8 flex-nowrap w-full [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
             <a href="{{ route('products.index') }}" 
-               class="flex-shrink-0 px-8 py-3 rounded-2xl whitespace-nowrap text-xs font-black uppercase tracking-widest transition-all duration-300 {{ !request('category') ? 'bg-primary text-white shadow-xl shadow-primary/20 scale-105' : 'bg-card border border-border text-text/50 hover:border-primary/30 hover:text-primary' }}">
+               class="flex-shrink-0 px-5 sm:px-8 py-2 sm:py-3 rounded-xl sm:rounded-2xl whitespace-nowrap text-[10px] sm:text-xs font-black uppercase tracking-widest transition-all duration-300 {{ !request('category') ? 'bg-primary text-white shadow-lg shadow-primary/20 scale-105' : 'bg-card border border-border text-text/50 hover:border-primary/30 hover:text-primary' }}">
                 All Collections
             </a>
             @foreach($categories as $category)
                 <a href="{{ route('products.index', ['category' => $category->slug]) }}" 
-                   class="flex-shrink-0 px-8 py-3 rounded-2xl whitespace-nowrap text-xs font-black uppercase tracking-widest transition-all duration-300 {{ request('category') == $category->slug || request('category') == $category->id ? 'bg-primary text-white shadow-xl shadow-primary/20 scale-105' : 'bg-card border border-border text-text/50 hover:border-primary/30 hover:text-primary' }}">
+                   class="flex-shrink-0 px-5 sm:px-8 py-2 sm:py-3 rounded-xl sm:rounded-2xl whitespace-nowrap text-[10px] sm:text-xs font-black uppercase tracking-widest transition-all duration-300 {{ request('category') == $category->slug || request('category') == $category->id ? 'bg-primary text-white shadow-lg shadow-primary/20 scale-105' : 'bg-card border border-border text-text/50 hover:border-primary/30 hover:text-primary' }}">
                     {{ $category->name }}
                     <span class="ml-1 text-[8px] opacity-50">({{ $category->products_count }})</span>
                 </a>
@@ -29,7 +33,7 @@
     </div>
 
     <!-- Products Grid -->
-    <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8" id="product-list">
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 md:gap-8" id="product-list">
         @forelse($products as $product)
             <div class="group relative bg-card border border-border rounded-[2.5rem] overflow-hidden transition-all duration-500 hover:shadow-2xl hover:-translate-y-2">
                 <div class="aspect-[4/5] bg-bg/50 relative overflow-hidden">
@@ -51,7 +55,7 @@
                     </div>
                     
                     <!-- Quick Add Badge -->
-                    <div class="absolute inset-x-4 bottom-4 translate-y-12 group-hover:translate-y-0 transition-transform duration-500">
+                    <div class="absolute inset-x-4 bottom-4 translate-y-0 lg:translate-y-16 lg:group-hover:translate-y-0 transition-transform duration-500">
                         <a href="{{ route('products.show', $product) }}" class="w-full py-3 bg-white/90 backdrop-blur-md text-black text-xs font-black uppercase tracking-widest rounded-2xl shadow-xl flex items-center justify-center gap-2 hover:bg-white transition-colors">
                             View Details
                         </a>
@@ -66,13 +70,13 @@
 
                 <div class="p-6">
                     <div class="flex items-start justify-between mb-2">
-                        <h3 class="font-bold text-text text-lg line-clamp-1 truncate pe-2">{{ $product->name }}</h3>
+                        <h3 class="font-bold text-text text-base md:text-lg line-clamp-1 truncate pe-2">{{ $product->name }}</h3>
                         <div class="flex flex-col items-end leading-none">
                             @if($product->discount_percentage > 0)
                                 <span class="text-text/40 font-bold text-xs line-through mb-1">${{ number_format($product->price, 2) }}</span>
-                                <span class="text-primary font-black text-lg">${{ number_format($product->price - ($product->price * ($product->discount_percentage / 100)), 2) }}</span>
+                                <span class="text-primary font-black text-base md:text-lg">${{ number_format($product->price - ($product->price * ($product->discount_percentage / 100)), 2) }}</span>
                             @else
-                                <span class="text-primary font-black text-lg">${{ number_format($product->price, 2) }}</span>
+                                <span class="text-primary font-black text-base md:text-lg">${{ number_format($product->price, 2) }}</span>
                             @endif
                         </div>
                     </div>

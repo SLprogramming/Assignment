@@ -27,7 +27,7 @@
             </a>
         </div>
     @else
-        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 md:gap-8">
             @foreach($products as $product)
                 <div class="group relative bg-card border border-border rounded-[2.5rem] overflow-hidden transition-all duration-500 hover:shadow-2xl hover:-translate-y-2">
                     <div class="aspect-[4/5] bg-bg/50 relative overflow-hidden">
@@ -51,8 +51,8 @@
                     </div>
 
                     <div class="p-6">
-                        <h3 class="font-bold text-text text-lg line-clamp-1 truncate mb-1">{{ $product->name }}</h3>
-                        <p class="text-primary font-black text-xl mb-4">${{ number_format($product->price, 2) }}</p>
+                        <h3 class="font-bold text-text text-base md:text-lg line-clamp-1 truncate mb-1">{{ $product->name }}</h3>
+                        <p class="text-primary font-black text-lg md:text-xl mb-4">${{ number_format($product->price, 2) }}</p>
 
                         <div class="flex items-center gap-3">
                             <a href="{{ route('products.show', $product) }}" class="flex-1 py-3 bg-primary/5 text-primary text-[10px] font-black uppercase tracking-widest rounded-xl hover:bg-primary hover:text-white transition-all text-center">

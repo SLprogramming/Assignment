@@ -48,15 +48,15 @@
 </head>
 <body class="antialiased">
     <nav class="sticky top-0 z-50 flex items-center justify-between px-4 sm:px-8 py-6 backdrop-blur-md bg-card/80 border-b border-border shadow-sm">
-        <a href="/" class="text-2xl font-bold text-primary tracking-tighter">ShopNest</a>
-        <div class="flex items-center gap-6">
+        <a href="/" class="text-xl md:text-2xl font-bold text-primary tracking-tighter">ShopNest</a>
+        <div class="flex items-center gap-3 sm:gap-6">
             <!-- Theme Toggle -->
             <button id="theme-toggle" class="p-2 rounded-xl bg-bg border border-border text-text/70 hover:text-primary transition-all duration-300 hover:shadow-lg hover:shadow-primary/10">
                 <svg id="theme-toggle-dark-icon" class="hidden w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
                 <svg id="theme-toggle-light-icon" class="hidden w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 100 2h1z" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
             </button>
             @auth
-                <div class="flex items-center gap-4">
+                <div class="flex items-center gap-2 sm:gap-4">
                     <a href="{{ route('wishlist.index') }}" class="p-2.5 rounded-xl bg-bg border border-border text-text/70 hover:text-primary transition-all duration-300 relative group">
                         <svg class="w-5 h-5 group-hover:scale-110 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path></svg>
                         @php
@@ -84,20 +84,23 @@
                             </span>
                         @endif
                     </a>
-                    <div class="flex flex-col">
+                    <div class="hidden sm:flex flex-col">
                         <span class="text-[10px] font-black text-text/30 uppercase tracking-[0.2em] leading-none mb-1">Authenticated</span>
                         <span class="text-sm font-black text-text leading-none">{{ auth()->user()->name }}</span>
                     </div>
                 </div>
                 @if(auth()->user()->isAdmin())
-                    <a href="/admin/dashboard" class="px-4 py-2 text-sm font-black text-primary border border-primary/20 bg-primary/5 rounded-lg transition-all hover:bg-primary/10">
+                    <a href="/admin/dashboard" class="hidden md:inline-block px-4 py-2 text-sm font-black text-primary border border-primary/20 bg-primary/5 rounded-lg transition-all hover:bg-primary/10">
                         Admin Dashboard
                     </a>
                 @endif
                 <form action="{{ route('logout') }}" method="POST">
                     @csrf
-                    <button type="submit" class="px-4 py-2 text-sm font-medium text-text border border-border rounded-lg transition-all hover:bg-bg">
+                    <button type="submit" class="hidden sm:inline-block px-4 py-2 text-sm font-medium text-text border border-border rounded-lg transition-all hover:bg-bg">
                         Logout
+                    </button>
+                    <button type="submit" class="sm:hidden p-2 text-text/70 hover:text-primary transition-colors">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path></svg>
                     </button>
                 </form>
             @else
@@ -107,7 +110,7 @@
         </div>
     </nav>
 
-    <main class="flex-1 p-8">
+    <main class="flex-1 p-4 sm:p-8">
         @yield('content')
     </main>
 

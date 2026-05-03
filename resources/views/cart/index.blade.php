@@ -27,12 +27,12 @@
             <!-- Items Section -->
             <div class="lg:col-span-2 space-y-6">
                 @foreach($cartItems as $item)
-                    <div class="group bg-card border border-border rounded-[2.5rem] p-6 transition-all duration-500 hover:shadow-2xl hover:shadow-primary/5 flex items-center gap-8 relative overflow-hidden">
+                    <div class="group bg-card border border-border rounded-[2.5rem] p-6 transition-all duration-500 hover:shadow-2xl hover:shadow-primary/5 flex flex-col sm:flex-row items-center sm:items-start md:items-center gap-6 sm:gap-8 relative overflow-hidden">
                         <!-- Background Accent -->
                         <div class="absolute top-0 right-0 w-32 h-32 bg-primary/5 rounded-bl-[5rem] -mr-16 -mt-16 group-hover:scale-150 transition-transform duration-700"></div>
 
                         <!-- Product Image -->
-                        <div class="relative w-32 h-32 rounded-3xl overflow-hidden bg-bg border border-border flex-shrink-0">
+                        <div class="relative w-full h-48 sm:w-32 sm:h-32 rounded-3xl overflow-hidden bg-bg border border-border flex-shrink-0">
                             @if($item->product->photo)
                                 <img src="{{ asset($item->product->photo) }}" alt="{{ $item->product->name }}" class="w-full h-full object-cover">
                             @else
@@ -44,22 +44,22 @@
 
                         <!-- Product Info -->
                         <div class="flex-1 min-w-0">
-                            <div class="flex items-start justify-between gap-4 mb-2">
+                            <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-2 md:gap-4 mb-2 w-full">
                                 <div class="min-w-0 flex-1">
-                                    <h3 class="text-xl font-black text-text line-clamp-2 group-hover:text-primary transition-colors leading-tight mb-1" title="{{ $item->product->name }}">
+                                    <h3 class="text-lg md:text-xl font-black text-text line-clamp-2 group-hover:text-primary transition-colors leading-tight mb-1" title="{{ $item->product->name }}">
                                         {{ $item->product->name }}
                                     </h3>
                                     <p class="text-xs font-bold text-text/30 uppercase tracking-widest">SKU: FLN-{{ str_pad($item->product->id, 4, '0', STR_PAD_LEFT) }}</p>
                                 </div>
-                                <div class="text-right">
-                                    <span class="text-xl font-black text-primary whitespace-nowrap">${{ number_format($item->product->discounted_price * $item->quantity, 2) }}</span>
+                                <div class="text-left md:text-right">
+                                    <span class="text-lg md:text-xl font-black text-primary whitespace-nowrap">${{ number_format($item->product->discounted_price * $item->quantity, 2) }}</span>
                                     @if($item->product->discount_percentage)
                                         <p class="text-[10px] text-red-500 font-bold uppercase tracking-widest mt-1">{{ $item->product->discount_percentage }}% Discount Applied</p>
                                     @endif
                                 </div>
                             </div>
 
-                            <div class="flex items-center gap-6 mt-6">
+                            <div class="flex flex-wrap items-center gap-4 sm:gap-6 mt-6">
                                 <!-- Quantity Control -->
                                 <form action="{{ route('cart.update', $item) }}" method="POST" class="flex items-center bg-bg border border-border rounded-xl px-2 h-10">
                                     @csrf
@@ -94,7 +94,7 @@
                      <!-- Background Glow -->
                      <div class="absolute -bottom-20 -right-20 w-64 h-64 bg-primary/10 blur-[100px] rounded-full"></div>
 
-                    <h3 class="text-2xl font-black text-text mb-8 italic">Order Summary</h3>
+                    <h3 class="text-xl md:text-2xl font-black text-text mb-8 italic">Order Summary</h3>
                     
                     <div class="space-y-4 mb-8">
                         <div class="flex justify-between text-sm">
@@ -108,7 +108,7 @@
                         <div class="h-px bg-border my-6"></div>
                         <div class="flex justify-between items-end">
                             <span class="text-xs font-bold text-text/40 uppercase tracking-[0.2em]">Total Amount</span>
-                            <span class="text-4xl font-black text-primary tracking-tighter">${{ number_format($cartItems->sum(fn($i) => $i->product->discounted_price * $i->quantity), 2) }}</span>
+                            <span class="text-3xl md:text-4xl font-black text-primary tracking-tighter">${{ number_format($cartItems->sum(fn($i) => $i->product->discounted_price * $i->quantity), 2) }}</span>
                         </div>
                     </div>
 
