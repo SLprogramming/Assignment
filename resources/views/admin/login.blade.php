@@ -44,7 +44,7 @@
                 <input type="checkbox" name="remember" class="w-4 h-4 rounded border-border bg-bg accent-primary">
                 <span class="group-hover:text-text transition-colors">Stay logged in</span>
             </label>
-            <a href="#" class="text-xs text-primary hover:underline">Forgot access?</a>
+            <!-- <a href="#" class="text-xs text-primary hover:underline">Forgot access?</a> -->
         </div>
 
         <button type="submit" class="w-full bg-primary hover:bg-primary-hover text-white font-semibold py-4 rounded-xl transition-all hover:-translate-y-0.5 shadow-lg shadow-primary/20">
