@@ -38,6 +38,7 @@
                 <th class="px-8 py-4 font-semibold text-[10px]">Product / INFO</th>
                 <th class="px-8 py-4 font-semibold text-center text-[10px]">Categories</th>
                 <th class="px-8 py-4 font-semibold text-center text-[10px]">Price</th>
+                <th class="px-8 py-4 font-semibold text-center text-[10px]">Discount</th>
                 <th class="px-8 py-4 font-semibold text-center text-[10px]">Stock</th>
                 <th class="px-8 py-4 font-semibold text-right text-[10px]">Actions</th>
             </tr>
@@ -75,6 +76,7 @@
                     </div>
                 </td>
                 <td class="px-8 py-5 text-center font-black text-text">${{ number_format($product->price, 2) }}</td>
+                <td class="px-8 py-5 text-center text-[13px] text-text/30 ">{{ $product->discount_percentage ?? "0" }}%</td>
                 <td class="px-8 py-5 text-center">
                     @if($product->stock_qty > 0)
                         <span class="text-sm font-bold text-text/70">{{ $product->stock_qty }} <span class="text-[10px] text-text/30 uppercase font-black">units</span></span>

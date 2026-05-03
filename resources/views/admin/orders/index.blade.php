@@ -24,7 +24,7 @@
                     </tr>
                 </thead>
                 <tbody class="divide-y divide-border">
-                    @foreach($orders as $order)
+                    @forelse($orders as $order)
                         <tr class="group hover:bg-primary/[0.02] transition-colors">
                             <td class="px-8 py-8">
                                 <span class="font-black text-text">#ORD-{{ str_pad($order->id, 5, '0', STR_PAD_LEFT) }}</span>
@@ -69,7 +69,23 @@
                                 </form>
                             </td>
                         </tr>
-                    @endforeach
+                    @empty
+                        <tr>
+                            <td colspan="6" class="px-8 py-20 text-center">
+                                <div class="flex flex-col items-center justify-center space-y-4">
+                                    <div class="w-20 h-20 rounded-full bg-primary/5 flex items-center justify-center">
+                                        <svg class="w-10 h-10 text-primary/20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path>
+                                        </svg>
+                                    </div>
+                                    <div class="flex flex-col items-center">
+                                        <span class="text-xl font-black text-text uppercase tracking-widest">No Orders Yet</span>
+                                        <span class="text-sm text-text/40 font-medium">When customers start buying, they will appear here.</span>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    @endforelse
                 </tbody>
             </table>
         </div>
