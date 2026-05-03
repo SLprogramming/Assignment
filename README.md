@@ -1,66 +1,91 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# ShopNest - E-Commerce Assignment Project
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+ShopNest is a modern, responsive e-commerce web application built with Laravel. This project was developed as a comprehensive assignment to demonstrate full-stack development skills, including product management, category organization, shopping cart functionality, and an administrative dashboard.
 
-## About Laravel
+## 🚀 Features
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+- **Product Catalog**: Browse a wide variety of products across multiple categories.
+- **Dynamic Categories**: Products are organized into categories like Electronics, Fashion, Home & Garden, etc.
+- **Discount System**: Support for percentage-based discounts on specific products.
+- **Shopping Cart**: Fully functional cart system for adding and managing items.
+- **Wishlist**: Users can save their favorite products for later.
+- **Order Management**: Complete checkout process with order history.
+- **Admin Dashboard**: Powerful administrative interface to manage products, categories, and view customer orders.
+- **Responsive Design**: Premium UI built with Tailwind CSS, optimized for both desktop and mobile.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## 🛠️ Installation & Setup
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+Follow these steps to get the project running locally:
 
-## Learning Laravel
+1. **Clone the Repository**
+   ```bash
+   git clone <repository-url>
+   cd Assignment
+   ```
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+2. **Install Dependencies**
+   ```bash
+   composer install
+   npm install
+   ```
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+3. **Environment Configuration**
+   - Copy the example environment file:
+     ```bash
+     cp .env.example .env
+     ```
+   - Open `.env` and configure your database settings (DB_DATABASE, DB_USERNAME, DB_PASSWORD).
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+4. **Generate App Key**
+   ```bash
+   php artisan key:generate
+   ```
 
-## Laravel Sponsors
+5. **Storage Link**
+   ```bash
+   php artisan storage:link
+   ```
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+---
 
-### Premium Partners
+## 🧪 Testing & Demo (Seeder Session)
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+To help you test the application quickly, I have provided comprehensive seeders that populate the database with realistic dummy data.
 
-## Contributing
+### 1. Setup the Database
+Run the following command to wipe the database, run all migrations, and populate it with sample data (Categories, Products, and Users):
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+```bash
+php artisan migrate:fresh --seed
+```
 
-## Code of Conduct
+### 2. Demo Accounts
+You can use the following credentials to test the different roles in the system:
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+#### **Administrator Account**
+- **Email**: `admin@gmail.com`
+- **Password**: `12345678`
+- **Role**: Access to the `/admin` dashboard.
 
-## Security Vulnerabilities
+#### **Regular User Account**
+- **Email**: `user@gmail.com`
+- **Password**: `user1234`
+- **Role**: Standard customer access.
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+### 3. Sample Data Overview
+- **Categories**: 6 major categories created.
+- **Products**: 34 dummy products added (23 non-discounted, 11 with discounts).
+- **Associations**: All products are correctly linked to their respective categories via a pivot table.
 
-## License
+---
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+## 💻 Tech Stack
+
+- **Backend**: Laravel 10.x / PHP 8.x
+- **Frontend**: Blade Templates, Tailwind CSS, JavaScript
+- **Database**: MySQL / SQLite
+- **Authentication**: Laravel Breeze / Built-in Auth
+
+## 📝 License
+
+This project is for educational purposes as part of a programming assignment.
