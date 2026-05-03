@@ -13,7 +13,7 @@
             </svg>
         </div>
         <h1 class="text-3xl font-bold tracking-tight mb-2 text-text">Admin Login</h1>
-        <p class="text-text/60 text-sm">Welcome back, Boss! Manage your empire.</p>
+        <!-- <p class="text-text/60 text-sm">Welcome back, Boss! Manage your empire.</p> -->
     </div>
 
     <form action="/admin/login" method="POST" class="space-y-6">
